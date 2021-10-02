@@ -1,25 +1,15 @@
 import requests
 
-url_template = "http://wttr.in/{}?n?{}Tqu&lang={}"
-location = "london"
-url = url_template.format(location, 'u', 'en')
 
-response = requests.get(url)
-response.raise_for_status()
+url_template = "http://wttr.in/{}"
+settings = {"london":  "en", "svo": "ru", "Череповец": "ru"}
 
-print(response.text)
+for location in settings.keys():
+    url = url_template.format(location)
 
-location = "svo"
-url = url_template.format(location, 'u', 'en')
+    payload = {"n": "", "m": "", "T": "", "lang": settings[location]}
 
-response = requests.get(url)
-response.raise_for_status()
+    response = requests.get(url, params=payload)
+    response.raise_for_status()
 
-print(response.text)
-location = "Череповец"
-url = url_template.format(location, 'm', 'ru')
-
-response = requests.get(url)
-response.raise_for_status()
-
-print(response.text)
+    print(response.text)
